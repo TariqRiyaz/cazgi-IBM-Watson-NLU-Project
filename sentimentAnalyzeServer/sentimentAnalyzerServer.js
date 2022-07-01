@@ -12,11 +12,11 @@ app.use(cors_app());
 /*Uncomment the following lines to loan the environment 
 variables that you set up in the .env file*/
 
-// const dotenv = require('dotenv');
-// dotenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 
-// const api_key = process.env.API_KEY;
-// const api_url = process.env.API_URL;
+const api_key = process.env.API_KEY;
+const api_url = process.env.API_URL;
 
 function getNLUInstance() {
     /*Type the code to create the NLU instance and return it.
@@ -26,11 +26,11 @@ function getNLUInstance() {
     const { IamAuthenticator } = require('ibm-watson/auth');
 
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-    version: '2021-08-01',
-    authenticator: new IamAuthenticator ({
-        apikey: 'idIpgp_Oi-aMtRKrA-uOL7DjIitLZBf2Xp0dtlPLBuKS'
-    }),
-    serviceUrl: 'https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/9f8ccf39-d4b3-48d6-9147-8e81eb5486fe'
+        version: '2021-08-01',
+        authenticator: new IamAuthenticator ({
+            apikey: api_key
+        }),
+    serviceUrl: api_url
     });
     return naturalLanguageUnderstanding;
 }
@@ -97,14 +97,14 @@ app.get("/url/sentiment", (req,res) => {
 //The endpoint for the webserver ending with /text/emotion
 app.get("/text/emotion", (req,res) => {
     let textToAnalyze = req.query.text
-        const analyzeParams = 
+    const analyzeParams = 
         {
             "text": textToAnalyze,
             "features": {
                 "keywords": {
-                    "emotion": true,
-                    "limit": 1
-                }
+                                "emotion": true,
+                                "limit": 1
+                            }
             }
         }
 
